@@ -57,64 +57,9 @@
 </template>
 
 <script lang="ts">
-import { ref, computed } from 'vue'
-import { ElMessage, ElMessageBox } from 'element-plus'
-
 export default {
   setup () {
-    let status = ''
-    const formLabelWidth = ref('120px')
-
-    // 获取用户列表
-    const tableData = ref([])
-
-
-    const form = ref({
-      username: '',
-      password: ''
-    })
-
-    const dialogFormVisible = ref(false)
-
-    // 提交用户信息
-    async function confirmUser () {
-      // 验证信息是否齐全
-      if (!(form.value.username && form.value.password)) {
-        ElMessage.error('表单信息不全')
-        return
-      }
-      switch (status) {
-        case 'create':
-       
-          break
-        case 'edit':
-
-          break
-      }
-    }
-
-    // 添加用户
-    async function handleCreate () {
-      form.value = {
-        username: '',
-        password: ''
-      }
-      dialogFormVisible.value = true
-      status = 'create'
-    }}}
-    // 添加用户信息
-    
-    // 编辑用户
-   
-    // 修改用户信息
-  
-    // 删除用户
-   
-    // 删除用户信息
-    
-    // 搜索用户
-
-    // 分页相关
-
-    // 超过一页就隐藏分页插件
+    console.log("sadas")
+  }
+}
 </script>
