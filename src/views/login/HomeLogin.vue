@@ -2,17 +2,23 @@
   <div>
     <div class="login-box">
       <h2>登录系统</h2>
-      <el-form :model="loginfrom" :rules="rules" ref="ruleFormRef">
-        <el-form-item>
+      <el-form :model="loginform" :rules="rules" ref="ruleFormRef">
+        <el-form-item prop="username">
           <div class="user-box">
-            <input type="text" :v-model="loginfrom.username" />
-            <label>账户：</label>
+            <input
+              type="username"
+              v-model="loginform.username"
+              placeholder="请输入用户名"
+            />
           </div>
         </el-form-item>
-        <el-form-item>
+        <el-form-item prop="password">
           <div class="user-box">
-            <input type="password" v-model="loginfrom.password" />
-            <label>密码：</label>
+            <input
+              type="password"
+              v-model="loginform.password"
+              placeholder="请输入用户密码"
+            />
           </div>
         </el-form-item>
         &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
@@ -34,34 +40,90 @@
   </div>
 </template>
 <script lang="ts" setup>
-import { reactive, ref } from "vue";
+import { reactive, ref,onBeforeMount,onBeforeUnmount } from "vue";
 import type { FormInstance, FormRules } from "element-plus";
+import { useRouter } from 'vue-router';
+
+const router = useRouter();
 const ruleFormRef = ref<FormInstance>();
 //from动态绑定值
-const loginfrom = reactive({
+const loginform = reactive({
   username: "",
   password: "",
 });
+//生命周期函数
+//将body-bg样式转换为登录页的body样式，以免直接定义body导致全局背景。后期加入导航守卫可以简化
+//DOM即将挂载
+onBeforeMount(()=>{
+  document.getElementsByTagName('body')[0].className = 'body-bg';
+})
+//DOM即将销毁
+onBeforeUnmount(()=>{
+  document.getElementsByTagName('body')[0].className = '';
+})
+//校验用户名
+var namereg = /^[a-zA-Z0-9_-]{4,16}$/;
+const validateusername = (rule: any, value: any, callback: any) => {
+  if (!namereg.test(value)) {
+    callback(new Error("用户名应是4到16位字母，数字，下划线，减号！"));
+  } else if (value !== "admin") {
+    callback(new Error("用户名不正确"));
+  } else {
+    callback();
+  }
+};
+//校验密码
+var passreg = /(?!^(\d+|[a-zA-Z]+|[~!@#$%^&*?]+)$)^[\w~!@#$%^&*?]{6,12}$/;
+const validatepassword = (rule: any, value: any, callback: any) => {
+  if (!passreg.test(value)) {
+    callback(new Error("密码应包含6-12位数字、字母或字符中的两类！"));
+  } else if (value !== "123456a@") {
+    callback(new Error("密码不正确！"));
+  } else {
+    callback();
+  }
+};
 //from表单校验规则
-const rules = reactive<FormRules>({});
+const rules = reactive<FormRules>({
+  username: [
+    {
+      required: true, //是否必填
+      message: "请输入用户名", //规则提示
+      trigger: "blur", //何事件触发
+    },
+    { validator: validateusername, trigger: "blur" },
+  ],
+  password: [
+    {
+      required: true,
+      message: "请输入密码",
+      trigger: "blur",
+    },
+    { validator: validatepassword, trigger: "blur" },
+  ],
+});
+//登录点击事件
 const handleSubmit = async (formEl: FormInstance | undefined) => {
   if (!formEl) return;
   formEl.validate((valid) => {
     if (valid) {
       console.log("submit!");
+      router.push('/about');
     } else {
       console.log("error submit!");
       return false;
     }
   });
 };
+//注册点击事件
 const signUp = () => {
-  console.log(loginfrom);
+  console.log(loginform);
+  router.push('/register');
 };
 </script>
   
 <style>
-body {
+.body-bg {
   background-image: url(../../assets/loginbackground.jpg);
   background-repeat: no-repeat;
   background-size: 100%;
@@ -227,6 +289,27 @@ body {
   100% {
     bottom: 100%;
   }
+}
+
+::-webkit-input-placeholder {
+  /*Webkit browsers*/
+  color: #999;
+  font-size: 16px;
+}
+:-moz-placeholder {
+  /*Mozilla Firefox 4 to 8*/
+  color: #999;
+  font-size: 16px;
+}
+::moz-placeholder {
+  /*Mozilla Firefox 19+*/
+  color: #999;
+  font-size: 16px;
+}
+:-ms-input-placeholder {
+  /*Internet Explorer 10+*/
+  color: #999;
+  font-size: 16px;
 }
 </style>
   

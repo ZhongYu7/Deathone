@@ -1,6 +1,7 @@
 import {createRouter,createWebHashHistory} from "vue-router";
 import Login from "../views/login/HomeLogin.vue";
 import About from '../views/AboutView.vue';
+import Register from "../views/register/HomeRegister.vue";
 
 // 1. 定义路由组件.
 // 也可以从其他文件导入
@@ -14,6 +15,10 @@ const routes = [
   { 
     path: '/', 
     component: Login 
+  },
+  {
+    path: '/register',
+    component: Register
   },
   {
     path: '/about',
