@@ -1,8 +1,9 @@
 <template>
   <div class="common-layout">
-    <el-container>
-      <el-aside width="200px"
+    <el-container>                              
+      <el-aside :width="isCollapse ? '64px':'200px'"
         ><el-menu
+          router
           default-active="2"
           class="el-menu-vertical-demo"
           :collapse="isCollapse"
@@ -26,8 +27,8 @@
               <span>Navigator One</span>
             </template>
             <el-menu-item-group>
-              <el-menu-item index="1-1">item one</el-menu-item>
-              <el-menu-item index="1-2">item two</el-menu-item>
+              <el-menu-item index="/vform">EchartTest1</el-menu-item>
+              <el-menu-item index="/EchartTest">EchartTest2</el-menu-item>
               <el-menu-item index="1-3">item three</el-menu-item>
             </el-menu-item-group>
             <el-sub-menu index="1-4">
@@ -79,7 +80,7 @@
           </el-sub-menu>
         </el-menu></el-aside
       >
-      <el-container>
+      <el-container style="height:100%;padding:0;margin:0;width:100%;">
         <el-header
         style="background: rgb(228, 188, 224)"
           ><div class="toolbar">
@@ -113,7 +114,9 @@
             <template #content>
               <span class="text-large font-600 mr-3"> Title </span>
             </template>
-          </el-page-header></el-main>
+          </el-page-header>
+        <el-container><router-view/></el-container>
+        </el-main>
       </el-container>
     </el-container>
   </div>
@@ -143,12 +146,14 @@ const handleOpen = (key: string, keyPath: string[]) => {
 const handleClose = (key: string, keyPath: string[]) => {
   console.log(key, keyPath);
 };
+
 </script>
 
 <style>
 .el-menu-vertical-demo:not(.el-menu--collapse) {
-  width: 200px;
-  min-height: 780px;
+  width: 100%;
+  min-height: 100%;
+  background: rgb(191, 227, 216)
 }
 .common-layout .toolbar {
   float: right;

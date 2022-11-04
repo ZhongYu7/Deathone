@@ -1,27 +1,21 @@
 <template>
-  <a style="color: white">注册功能待出</a>
+  <a class="textlable">注册功能待出</a>
   <div>
     <el-form
       label-position="right"
       label-width="100px"
-      style="
-        max-width: 460px;
-        float: left;
-        position: relative;
-        left: 15%;
-        margin: 15%;
-      "
+      class="form"
     >
       <el-form-item>
-        <a style="color: white">邮箱：</a>
-        <el-input v-model="registerForm.rEmail" />
+        <a class="textlable">邮箱：</a>
+        <el-input v-model="registerForm.rEmail" class="input"/>
       </el-form-item>
       <el-form-item>
-        <a style="color: white">密码：</a>
+        <a class="textlable">密码：</a>
         <el-input type="password" v-model="registerForm.rPassword" />
       </el-form-item>
       <el-form-item>
-        <a style="color: white">确认密码：</a>
+        <a class="textlable">确认密码：</a>
         <el-input
           type="password"
           v-model="registerForm.confirmPassword"
@@ -63,7 +57,7 @@
           "
           >查看用户使用准则</a
         >
-        <el-dialog v-model="visible" :show-close="false">
+        <el-dialog v-model="visible" :show-close="false" destroy-on-close>
           <template #header="{ close, titleId, titleClass }">
             <div class="my-header">
               <h4 :id="titleId" :class="titleClass">用户准则!</h4>
@@ -164,6 +158,19 @@ const confirmFunc = () => {
 </script>
 
 <style>
+.form{
+  max-width: 460px;
+  float: left;
+  position: relative;
+  left: 15%;
+  margin: 15%;
+}
+.textlable{
+  color: white;
+}
+.input{
+  background: rgb(162, 61, 33);
+}
 .body-bg {
   background-image: url(../../assets/loginbackground.jpg);
   background-repeat: no-repeat;

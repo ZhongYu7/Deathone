@@ -40,9 +40,9 @@
   </div>
 </template>
 <script lang="ts" setup>
-import { reactive, ref,onBeforeMount,onBeforeUnmount } from "vue";
+import { reactive, ref, onBeforeMount, onBeforeUnmount } from "vue";
 import type { FormInstance, FormRules } from "element-plus";
-import { useRouter } from 'vue-router';
+import { useRouter } from "vue-router";
 
 const router = useRouter();
 const ruleFormRef = ref<FormInstance>();
@@ -54,13 +54,13 @@ const loginform = reactive({
 //生命周期函数
 //将body-bg样式转换为登录页的body样式，以免直接定义body导致全局背景。后期加入导航守卫可以简化
 //DOM即将挂载
-onBeforeMount(()=>{
-  document.getElementsByTagName('body')[0].className = 'body-bg';
-})
+onBeforeMount(() => {
+  document.getElementsByTagName("body")[0].className = "body-bg";
+});
 //DOM即将销毁
-onBeforeUnmount(()=>{
-  document.getElementsByTagName('body')[0].className = '';
-})
+onBeforeUnmount(() => {
+  document.getElementsByTagName("body")[0].className = "";
+});
 //校验用户名
 var namereg = /^[a-zA-Z0-9_-]{4,16}$/;
 const validateusername = (rule: any, value: any, callback: any) => {
@@ -108,7 +108,7 @@ const handleSubmit = async (formEl: FormInstance | undefined) => {
   formEl.validate((valid) => {
     if (valid) {
       console.log("submit!");
-      router.push('/about');
+      router.push("/about");
     } else {
       console.log("error submit!");
       return false;
@@ -118,10 +118,10 @@ const handleSubmit = async (formEl: FormInstance | undefined) => {
 //注册点击事件
 const signUp = () => {
   console.log(loginform);
-  router.push('/register');
+  router.push("/register");
 };
 </script>
-  
+
 <style>
 .body-bg {
   background-image: url(../../assets/loginbackground.jpg);
@@ -312,4 +312,3 @@ const signUp = () => {
   font-size: 16px;
 }
 </style>
-  
